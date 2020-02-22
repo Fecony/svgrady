@@ -1,0 +1,25 @@
+{
+  "name": "svgrady",
+  "version": "1.0.0",
+  "description": "Javascript Separated Radial SVG generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fecony/svgrady.git"
+  },
+  "keywords": [
+    "svg",
+    "radial",
+    "separated",
+    "steps"
+  ],
+  "author": "Richard Tagil <tagils@mail.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Fecony/svgrady/issues"
+  },
+  "homepage": "https://github.com/Fecony/svgrady#readme"
+}
