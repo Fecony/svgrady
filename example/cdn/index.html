@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="svg" id="example"></div>
+  </div>
+  <script src="../../dist/bundle.umd.js"></script>
+  <script>
+    const options = { 0, 250, 'lightred', 'gray'};
+    const svg = new SVGrady(options)
+    console.log(svg)
+  </script>
+</body>
+</html>

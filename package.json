@@ -2,16 +2,24 @@
   "name": "svgrady",
   "version": "1.0.0",
   "description": "Javascript Separated Radial SVG generator",
-  "main": "index.js",
+  "main": "dist/bundle.cjs.js",
+  "module": "dist/bundle.esm.js",
+  "browser": "dist/bundle.umd.js",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:staged": "jest --findRelatedTests",
     "lint": "eslint '**/*.js'",
     "lint:fix": "prettier-eslint $PWD/'**/*.js' --write"
   },
   "lint-staged": {
     "*.js": [
-      "npm run lint:fix"
+      "npm run lint:fix",
+      "npm run test:staged"
     ]
   },
   "repository": {
@@ -34,6 +42,7 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@rollup/plugin-node-resolve": "^7.1.1",
+    "babel-jest": "^25.1.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
@@ -41,6 +50,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^4.2.3",
+    "jest": "^25.1.0",
     "lint-staged": "^10.0.7",
     "prettier-eslint": "^9.0.1",
     "prettier-eslint-cli": "^5.0.0",
