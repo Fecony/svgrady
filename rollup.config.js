@@ -43,7 +43,7 @@ export default {
   plugins: [
     resolve(),
     typescript({
-      { useTsconfigDeclarationDir: true },
+      useTsconfigDeclarationDir: true,
       typescript: require('typescript')
     }),
     babel({ exclude: 'node_modules/**' }),

@@ -20,17 +20,21 @@
       justify-content: center;
       align-items: center;
     }
+
+    .svg {
+      flex: 1;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="svg" id="example"></div>
+    <div class="svg" id="example1" data-svgrady="0,6"></div>
+    <div class="svg" id="example2" data-svgrady="5,6"></div>
+    <div class="svg" id="example3" data-svgrady="1,2"></div>
   </div>
   <script src="../../dist/bundle.umd.js"></script>
   <script>
-    const options = { 0, 250, 'lightred', 'gray'};
-    const svg = new SVGrady(options)
-    console.log(svg)
+    new SVGrady('svgrady')
   </script>
 </body>
 </html>

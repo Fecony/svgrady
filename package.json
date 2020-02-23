@@ -8,7 +8,7 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c",
@@ -63,7 +63,6 @@
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^9.0.0",
-    "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.8.2"
   }
 }
