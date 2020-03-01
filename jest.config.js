@@ -3,7 +3,7 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest'
   },
   collectCoverage: true,
-  coverageDirectory: './coverage/',
+  coverageReporters: ['lcov', 'text-summary', 'json', 'text', 'text-summary', 'html'],
   collectCoverageFrom: ['src/*.ts', 'src/**/*.ts', '!**/node_modules/**'],
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['ts', 'js']
