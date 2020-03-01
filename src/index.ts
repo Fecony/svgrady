@@ -43,7 +43,7 @@ export default class SVGRady {
 
     this.elements = this.getElements(this.selector)
 
-    if (!!this.elements.length) {
+    if (this.elements.length) {
       this.elements.forEach(el => this.drawSVG(el))
     }
   }
@@ -69,7 +69,7 @@ export default class SVGRady {
     let { start, end, radius, center, spacing, color, activeColor, replace } = this
 
     let [svg, g]: Element[] = this.createNSElements(['svg', 'g'])
-    let [min, max]: number[] = el.dataset.svgrady!.split(',').map(v => parseInt(v))
+    let [min, max]: number[] = el.dataset.svgrady!.split(',').map(v => parseInt(v, 10))
 
     svg.setAttribute('data-steps', `${min},${max}`)
     svg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}`)
