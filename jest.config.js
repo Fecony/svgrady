@@ -2,9 +2,8 @@ module.exports = {
   transform: {
     '^.+\\.ts?$': 'ts-jest'
   },
-  collectCoverageFrom: ['src/*.{js,ts}'],
-  coveragePathIgnorePatterns: ['/node_modules/', '/test/'],
-  testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
+  collectCoverage: true,
+  collectCoverageFrom: ['src/*.ts', 'src/**/*.ts', '!**/node_modules/**'],
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['ts', 'js']
 }
