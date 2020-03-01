@@ -45,7 +45,7 @@ let options = {
   replace: false // if true, will replace element with svg
 }
 
-new SVGrady(options)
+new SVGRady(options)
 ```
 
 ## To Do:
@@ -57,6 +57,8 @@ Things that can be implemented.
 - ...
 
 ## Examples
+
+- TODO
 
 ## Contributing
 
