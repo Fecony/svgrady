@@ -23,7 +23,8 @@ Import package
 import svgrady from 'svgrady'
 ```
 
-In your layout add data attribute with values (min,max)
+In your layout add data attribute with values (min,max).
+Where 3 is minimal(completed steps), and 5 is total count, separated by comma
 
 ```html
 <div data-svgrady="3,5"></div>
