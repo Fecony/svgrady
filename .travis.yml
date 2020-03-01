@@ -1,0 +1,16 @@
+sudo: false
+
+langugage: node_js
+
+node_js:
+  - node
+
+script:
+  - npm run lint
+  - npm run test:coverage
+
+after_success:
+  - codecov
+
+notifications:
+  - email: false
