@@ -3,16 +3,22 @@
 [![Build Status](https://travis-ci.com/Fecony/svgrady.svg?token=KquVGmQ9CBMhcoabSNv9&branch=master)](https://travis-ci.com/Fecony/svgrady)
 [![codecov](https://codecov.io/gh/Fecony/svgrady/branch/master/graph/badge.svg?token=SwFAQ4QTft)](https://codecov.io/gh/Fecony/svgrady)
 
-Javascript Separated Radial SVG generator
+### Javascript Separated Radial SVG generator
 
 ![Radial SVG Preview](./images/preview.png)
 
 ## Installation
 
-Use the package manager [npm](https://www.npmjs.com/) to install svgrady.
+You can install SVGRady as an NPM package:
 
 ```bash
 npm install svgrady
+```
+
+Or link directly to the CDN:
+
+```html
+<script src="https://some/link/to/unpkg/svgrady.js"></script>
 ```
 
 ## Usage
@@ -24,13 +30,17 @@ import svgrady from 'svgrady'
 ```
 
 In your layout add data attribute with values (min,max).
-Where 3 is minimal(completed steps), and 5 is total count, separated by comma
+Where 3 is minimal(completed steps), and 5 is total count, separated by comma.
+
+> Note: you will need to use data attribute to initialize svgrady
 
 ```html
 <div data-svgrady="3,5"></div>
 ```
 
 Customize options and initialize SVGRady
+
+> **Note**: Polar axis is rotated by 90° and is located on top
 
 ```js
 let options = {
@@ -55,6 +65,7 @@ Things that can be implemented.
 
 - Animations
 - Tooltips (show info about step)
+- Flex grow on elements?
 - ...
 
 ## Examples

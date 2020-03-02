@@ -10,6 +10,7 @@ interface SVGRadyInterface {
   end?: number
   spacing?: number
   activeColor?: string
+  strokeWidth?: string
   color?: string
   replace?: boolean
 }
@@ -27,6 +28,7 @@ export default class SVGRady {
   elements: NodeListOf<HTMLElement>
   center: Point
   replace: boolean
+  strokeWidth: string
 
   constructor(options: SVGRadyInterface = {}) {
     this.selector = options.selector ?? 'svgrady'
@@ -35,10 +37,11 @@ export default class SVGRady {
     this.radius = options.radius ?? 60
     this.start = options.start ?? -140
     this.end = options.end ?? 140
-    this.spacing = options.spacing ?? 5
+    this.spacing = options.spacing === 0 ? 1 : options.spacing ?? 5
     this.activeColor = options.activeColor ?? '#613DC1'
     this.color = options.color ?? '#D9DAD8'
     this.replace = options.replace ?? false
+    this.strokeWidth = options.strokeWidth ?? '4'
     this.center = this.getCenter()
 
     this.elements = this.getElements(this.selector)
@@ -65,8 +68,25 @@ export default class SVGRady {
     return { x, y }
   }
 
+  private isFullCircle(start: number, end: number): boolean {
+    if (start - end === 0 || end - start === 360 || start - end === -360) {
+      return true
+    }
+    return false
+  }
+
   private drawSVG(el: HTMLElement): void {
-    let { start, end, radius, center, spacing, color, activeColor, replace } = this
+    let {
+      start,
+      end,
+      strokeWidth,
+      radius,
+      center,
+      spacing,
+      color,
+      activeColor,
+      replace
+    } = this
 
     let [svg, g]: Element[] = this.createNSElements(['svg', 'g'])
     let [min, max]: number[] = el.dataset.svgrady!.split(',').map(v => parseInt(v, 10))
@@ -74,18 +94,15 @@ export default class SVGRady {
     svg.setAttribute('data-steps', `${min},${max}`)
     svg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}`)
 
-    g.setAttribute('stroke-width', '4')
+    g.setAttribute('stroke-width', strokeWidth)
     g.setAttribute('fill-rule', 'evenodd')
     g.setAttribute('fill', 'transparent')
     g.setAttribute('stroke-linecap', 'round')
 
-    /**
-     * Find given angles as Vectors on circle
-     * And length between them
-     *
-     * Yes, I know we can just substract one angle from another to get same value
-     * I just can't get it in my head for now.
-     */
+    if (this.isFullCircle(start, end)) {
+      end = end - spacing
+    }
+
     let point1: Point = convertAngleToPoint(this.radius, start)
     let point2: Point = convertAngleToPoint(this.radius, end)
     let length: number = this.calculateAngleBetweenTwoPoints(point1, point2)

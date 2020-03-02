@@ -11,6 +11,7 @@
 
     body {
       margin: 0;
+      background-color: #fdfdfd;
     }
 
     .container {
@@ -28,20 +29,25 @@
 </head>
 <body>
   <div class="container">
-    <div class="svg" id="example0" data-svgrady="3,5"></div>
+    <div class="svg" id="example0" data-svgrady="2,7"></div>
     <div class="svg" id="example1" data-svgrady="3,6"></div>
-    <div class="svg" id="example2" data-svgrady="2,5"></div>
-    <div class="svg" id="example3" data-svgrady="2,4"></div>
+    <div class="svg" id="example2" data-svgrady="4,5"></div>
+    <div class="svg" id="example3" data-svgrady="3,4"></div>
     <div class="svg" id="example4" data-svgrady="2,3"></div>
     <div class="svg" id="example5" data-svgrady="1,2"></div>
     <div class="svg" id="example6" data-svgrady="0,1"></div>
   </div>
+  <!-- Change to unpkg once released.  -->
   <script src="../../dist/bundle.umd.js"></script>
   <script>
     let params = {
+      spacing: 5,
+      strokeWidth: 4,
+      start: -120,
+      end: 120,
       selector: "svgrady",
     }
-    new SVGRady(params)
+    new SVGrady(params)
   </script>
 </body>
 </html>

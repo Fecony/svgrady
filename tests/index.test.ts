@@ -1,10 +1,10 @@
-import SVGRady from '../src/index'
+import SVGrady from '../src/index'
 
-describe('SVGRady test', () => {
-  it('SVGRady Class is instantiable', () => {
+describe('SVGrady test', () => {
+  it('SVGrady Class is instantiable', () => {
     let params = {
       selector: 'svgrady'
     }
-    expect(new SVGRady(params)).toBeInstanceOf(SVGRady)
+    expect(new SVGrady(params)).toBeInstanceOf(SVGrady)
   })
 })
