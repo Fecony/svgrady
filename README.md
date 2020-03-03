@@ -1,5 +1,6 @@
 # SVGRady ◠
 
+[![npm version](https://badge.fury.io/js/svgrady.svg)](https://badge.fury.io/js/svgrady)
 [![Build Status](https://travis-ci.com/Fecony/svgrady.svg?token=KquVGmQ9CBMhcoabSNv9&branch=master)](https://travis-ci.com/Fecony/svgrady)
 [![codecov](https://codecov.io/gh/Fecony/svgrady/branch/master/graph/badge.svg?token=SwFAQ4QTft)](https://codecov.io/gh/Fecony/svgrady)
 
@@ -18,7 +19,7 @@ npm install svgrady
 Or link directly to the CDN:
 
 ```html
-<script src="https://some/link/to/unpkg/svgrady.js"></script>
+<script src="https://unpkg.com/svgrady@latest/dist/bundle.umd.js"></script>
 ```
 
 ## Usage
@@ -67,10 +68,6 @@ Things that can be implemented.
 - Tooltips (show info about step)
 - Flex grow on elements?
 - ...
-
-## Examples
-
-- TODO
 
 ## Contributing
 
