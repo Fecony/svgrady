@@ -24,7 +24,7 @@
     }
 
     .svg {
-      flex-basis: 25%;
+      flex: 0 1 300px;
       padding-left: 8px;
       padding-right: 8px;
     }
@@ -82,11 +82,10 @@
     <div class="svg" data-svgrady="2,3"></div>
     <div class="svg" data-svgrady="1,2"></div>
   </div>
-  <!-- Change to unpkg once released.  -->
-  <script src="https://unpkg.com/svgrady@latest/dist/bundle.umd.js"></script>
+  <script src="https://unpkg.com/svgrady@latest/dist/svgrady.umd.js"></script>
   <script>
     let params = {
-      spacing: 5,
+      spacing: 1,
       strokeWidth: 4,
       start: -120,
       end: 120,
