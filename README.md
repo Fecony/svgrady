@@ -19,7 +19,7 @@ npm install svgrady
 Or link directly to the CDN:
 
 ```html
-<script src="https://unpkg.com/svgrady@latest/dist/bundle.umd.js"></script>
+<script src="https://unpkg.com/svgrady@latest/dist/svgrady.umd.js"></script>
 ```
 
 ## Usage
@@ -43,22 +43,30 @@ Customize options and initialize SVGRady
 
 > **Note**: Polar axis is rotated by 90° and is located on top
 
+> Look at [Configuration](#configuration) for possible options
+
 ```js
-let options = {
-  selector: 'svgrady', // Element data attribute
-  width: 150, // SVG width
-  height: 150, // SVG height
-  radius: 60, // SVG radius
-  start: -140, // Start angle
-  end: 140, // End Angle
-  spacing: 5, // Spacing between each step
-  activeColor: '#613DC1',
-  color: '#D9DAD8',
-  replace: false // if true, will replace element with svg
-}
+let options = {}
 
 new SVGRady(options)
 ```
+
+## Configuration
+
+Options that can be passed:
+
+- `selector` - add svgrady to elements with data-`selector` (default `svgrady`)
+- `width` - SVG width 150 (default `150`)
+- `height` - SVG height (default `150`)
+- `radius` - SVG radial radius (default `60`)
+- `start` - Start angle (default `-140`)
+- `end` - End Angle (default `140`)
+- `spacing` - Spacing between each step (default `5`)
+- `activeColor` - Active(Completed) step color (default `#613DC1`)
+- `color` - Default color for step (default `#D9DAD8`)
+- `replace` - if true, will replace element with svg (default `false`)
+- `strokeWidth` - SVG stroke width, will be used to calculate distance between each step (default `4`)
+- `linecap` - SVG stroke linecap e.g.:( `round` | `butt` | `square`) (default `round`)
 
 ## To Do:
 

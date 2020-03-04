@@ -1,7 +1,7 @@
-import { toDegrees, convertAngleToPoint, toRadians } from './utils'
-import { Point } from './types'
+import { toDegrees, convertAngleToPoint } from './utils'
+import { Point, Linecap } from './types'
 
-interface SVGRadyInterface {
+export interface SVGRadyInterface {
   selector?: string
   width?: number
   height?: number
@@ -11,6 +11,7 @@ interface SVGRadyInterface {
   spacing?: number
   activeColor?: string
   strokeWidth?: string
+  linecap?: Linecap
   color?: string
   replace?: boolean
 }
@@ -29,6 +30,7 @@ export default class SVGRady {
   center: Point
   replace: boolean
   strokeWidth: string
+  linecap: Linecap
 
   constructor(options: SVGRadyInterface = {}) {
     this.selector = options.selector ?? 'svgrady'
@@ -37,11 +39,13 @@ export default class SVGRady {
     this.radius = options.radius ?? 60
     this.start = options.start ?? -140
     this.end = options.end ?? 140
-    this.spacing = options.spacing === 0 ? 1 : options.spacing ?? 5
+    this.spacing = options.spacing ?? 5
     this.activeColor = options.activeColor ?? '#613DC1'
     this.color = options.color ?? '#D9DAD8'
     this.replace = options.replace ?? false
     this.strokeWidth = options.strokeWidth ?? '4'
+    this.linecap = options.linecap ?? 'round'
+
     this.center = this.getCenter()
 
     this.elements = this.getElements(this.selector)
@@ -51,16 +55,33 @@ export default class SVGRady {
     }
   }
 
+  /**
+   * Search for elements with provided selector as data attribute
+   *
+   * @param {string} selector
+   * @returns {NodeListOf<HTMLElement>} Array of Node HTMLElements
+   */
   private getElements(selector: string): NodeListOf<HTMLElement> {
     return document.querySelectorAll(`[data-${selector}]`)
   }
 
+  /**
+   * Create SVG Namespaced Elements
+   *
+   * @param {string} elements Namespaced Elements to create
+   * @returns {Array<Element>}
+   */
   private createNSElements(elements: string[]): Array<Element> {
     let svgNS: string = 'http://www.w3.org/2000/svg'
 
     return elements.map(el => document.createElementNS(svgNS, el))
   }
 
+  /**
+   * Get center point from width and height
+   *
+   * @returns {Point}
+   */
   private getCenter(): Point {
     let x = this.width / 2
     let y = this.height / 2
@@ -68,6 +89,13 @@ export default class SVGRady {
     return { x, y }
   }
 
+  /**
+   * Check if provided angles are full circle
+   *
+   * @param {start} Start Angle
+   * @param {end} End Angle
+   * @returns {boolean}
+   */
   private isFullCircle(start: number, end: number): boolean {
     if (start - end === 0 || end - start === 360 || start - end === -360) {
       return true
@@ -75,6 +103,13 @@ export default class SVGRady {
     return false
   }
 
+  /**
+   * Draw SVG and calculate everything else
+   *
+   * @todo Teardown this method because it does a lot of thinks
+   * @param {HTMLElement} el
+   * @returns {void}
+   */
   private drawSVG(el: HTMLElement): void {
     let {
       start,
@@ -85,7 +120,8 @@ export default class SVGRady {
       spacing,
       color,
       activeColor,
-      replace
+      replace,
+      linecap
     } = this
 
     let [svg, g]: Element[] = this.createNSElements(['svg', 'g'])
@@ -97,7 +133,7 @@ export default class SVGRady {
     g.setAttribute('stroke-width', strokeWidth)
     g.setAttribute('fill-rule', 'evenodd')
     g.setAttribute('fill', 'transparent')
-    g.setAttribute('stroke-linecap', 'round')
+    g.setAttribute('stroke-linecap', linecap)
 
     if (this.isFullCircle(start, end)) {
       end = end - spacing
@@ -108,7 +144,8 @@ export default class SVGRady {
     let length: number = this.calculateAngleBetweenTwoPoints(point1, point2)
 
     let spacesBetween: number = max - 1
-    let lengthWithoutSpaces: number = length - spacing * spacesBetween
+    let lengthWithoutSpaces: number =
+      length - spacing * spacesBetween + parseInt(strokeWidth, 10)
     let pieceLength: number = lengthWithoutSpaces / max
     let count: number = 0
 
@@ -125,7 +162,7 @@ export default class SVGRady {
         start = start + pieceLength + spacing
       }
 
-      end = start + pieceLength
+      end = start + pieceLength - parseInt(strokeWidth, 10)
       path.setAttribute('d', this.drawArc(center, radius, start, end))
       g.appendChild(path)
     }
@@ -134,6 +171,13 @@ export default class SVGRady {
     replace ? el.parentNode?.replaceChild(svg, el) : el.appendChild(svg)
   }
 
+  /**
+   * Calculate Angle between given points.
+   *
+   * @param {Point} point1 First Point on circle
+   * @param {Point} point2 Second Point on circle
+   * @returns {number}
+   */
   private calculateAngleBetweenTwoPoints(point1: Point, point2: Point): number {
     let angle1: number = toDegrees(Math.atan2(point1.y, point1.x))
     let angle2: number = toDegrees(Math.atan2(point2.y, point2.x))
@@ -144,12 +188,22 @@ export default class SVGRady {
     return result
   }
 
+  /**
+   * Will Convert given polar coordinates to Cartesian
+   * - Convert Angle with radius to x,y
+   *
+   * @param {number} centerX
+   * @param {number} centerY
+   * @param {number} radius
+   * @param {number} angleInDegrees
+   * @returns {Point}
+   */
   private polarToCartesian(
     centerX: number,
     centerY: number,
     radius: number,
     angleInDegrees: number
-  ) {
+  ): Point {
     let angleInRadians: number = ((angleInDegrees - 90) * Math.PI) / 180.0
 
     return {
@@ -158,7 +212,16 @@ export default class SVGRady {
     }
   }
 
-  private drawArc({ x, y }: Point, radius: number, start: number, end: number) {
+  /**
+   * Draw arc on current path element
+   *
+   * @param {Point} x, y
+   * @param {number} radius
+   * @param {number} start
+   * @param {number} end
+   * @returns {string} Returns svg arc string
+   */
+  private drawArc({ x, y }: Point, radius: number, start: number, end: number): string {
     let startPoint: Point = this.polarToCartesian(x, y, radius, end)
     let endPoint: Point = this.polarToCartesian(x, y, radius, start)
     let angle = end - start

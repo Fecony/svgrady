@@ -2,9 +2,9 @@
   "name": "svgrady",
   "version": "1.0.0",
   "description": "Javascript Separated Radial SVG generator",
-  "main": "dist/bundle.cjs.js",
-  "module": "dist/bundle.esm.js",
-  "browser": "dist/bundle.umd.js",
+  "main": "dist/svgrady.cjs.js",
+  "module": "dist/svgrady.esm.js",
+  "browser": "dist/svgrady.umd.js",
   "files": [
     "dist"
   ],
