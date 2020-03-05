@@ -10,7 +10,7 @@ export interface SVGRadyInterface {
   end?: number
   spacing?: number
   activeColor?: string
-  strokeWidth?: string
+  strokeWidth?: number
   linecap?: Linecap
   color?: string
   replace?: boolean
@@ -29,7 +29,7 @@ export default class SVGRady {
   elements: NodeListOf<HTMLElement>
   center: Point
   replace: boolean
-  strokeWidth: string
+  strokeWidth: number
   linecap: Linecap
 
   constructor(options: SVGRadyInterface = {}) {
@@ -43,11 +43,10 @@ export default class SVGRady {
     this.activeColor = options.activeColor ?? '#613DC1'
     this.color = options.color ?? '#D9DAD8'
     this.replace = options.replace ?? false
-    this.strokeWidth = options.strokeWidth ?? '4'
+    this.strokeWidth = options.strokeWidth ?? 4
     this.linecap = options.linecap ?? 'round'
 
     this.center = this.getCenter()
-
     this.elements = this.getElements(this.selector)
 
     if (this.elements.length) {
@@ -130,7 +129,7 @@ export default class SVGRady {
     svg.setAttribute('data-steps', `${min},${max}`)
     svg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}`)
 
-    g.setAttribute('stroke-width', strokeWidth)
+    g.setAttribute('stroke-width', strokeWidth.toString(10))
     g.setAttribute('fill-rule', 'evenodd')
     g.setAttribute('fill', 'transparent')
     g.setAttribute('stroke-linecap', linecap)
@@ -144,8 +143,7 @@ export default class SVGRady {
     let length: number = this.calculateAngleBetweenTwoPoints(point1, point2)
 
     let spacesBetween: number = max - 1
-    let lengthWithoutSpaces: number =
-      length - spacing * spacesBetween + parseInt(strokeWidth, 10)
+    let lengthWithoutSpaces: number = length - spacing * spacesBetween + strokeWidth
     let pieceLength: number = lengthWithoutSpaces / max
     let count: number = 0
 
@@ -162,7 +160,7 @@ export default class SVGRady {
         start = start + pieceLength + spacing
       }
 
-      end = start + pieceLength - parseInt(strokeWidth, 10)
+      end = start + pieceLength - strokeWidth
       path.setAttribute('d', this.drawArc(center, radius, start, end))
       g.appendChild(path)
     }
