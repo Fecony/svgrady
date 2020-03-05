@@ -14,6 +14,7 @@ export interface SVGRadyInterface {
   linecap?: Linecap
   color?: string
   replace?: boolean
+  className?: string
 }
 
 export default class SVGRady {
@@ -31,8 +32,10 @@ export default class SVGRady {
   replace: boolean
   strokeWidth: number
   linecap: Linecap
+  className: string
 
   constructor(options: SVGRadyInterface = {}) {
+    console.log(options)
     this.selector = options.selector ?? 'svgrady'
     this.width = options.width ?? 150
     this.height = options.height ?? 150
@@ -45,6 +48,7 @@ export default class SVGRady {
     this.replace = options.replace ?? false
     this.strokeWidth = options.strokeWidth ?? 4
     this.linecap = options.linecap ?? 'round'
+    this.className = options.className ?? ''
 
     this.center = this.getCenter()
     this.elements = this.getElements(this.selector)
@@ -121,7 +125,8 @@ export default class SVGRady {
       color,
       activeColor,
       replace,
-      linecap
+      linecap,
+      className
     } = this
 
     let [svg, g]: Element[] = this.createNSElements(['svg', 'g'])
@@ -129,6 +134,10 @@ export default class SVGRady {
 
     svg.setAttribute('data-steps', `${min},${max}`)
     svg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}`)
+
+    if (className.length) {
+      svg.setAttribute('class', className)
+    }
 
     g.setAttribute('stroke-width', strokeWidth.toString(10))
     g.setAttribute('fill-rule', 'evenodd')
@@ -151,10 +160,14 @@ export default class SVGRady {
     for (let i = 0; i < max; i++) {
       let [path]: Element[] = this.createNSElements(['path'])
       path.setAttribute('stroke', color)
+      path.setAttribute('class', 'step')
       count++
 
       for (let j = 1; j <= min; j++) {
-        if (count <= min) path.setAttribute('stroke', activeColor)
+        if (count <= min) {
+          path.setAttribute('stroke', activeColor)
+          path.setAttribute('class', 'step done')
+        }
       }
 
       if (i > 0) {

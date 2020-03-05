@@ -67,6 +67,7 @@ Options that can be passed:
 - `replace` - if true, will replace element with svg (default `false`)
 - `strokeWidth` - SVG stroke width, will be used to calculate distance between each step (default `4`)
 - `linecap` - SVG stroke linecap e.g.:( `round` | `butt` | `square`) (default `round`)
+- `className` - Class name that will be added to svg
 
 ## To Do:
 
