@@ -111,6 +111,7 @@ export default class SVGRady {
    */
   private drawSVG(el: HTMLElement): void {
     let {
+      selector,
       start,
       end,
       strokeWidth,
@@ -124,7 +125,7 @@ export default class SVGRady {
     } = this
 
     let [svg, g]: Element[] = this.createNSElements(['svg', 'g'])
-    let [min, max]: number[] = el.dataset.svgrady!.split(',').map(v => parseInt(v, 10))
+    let [min, max]: number[] = el.dataset[selector]!.split(',').map(v => parseInt(v, 10))
 
     svg.setAttribute('data-steps', `${min},${max}`)
     svg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}`)
