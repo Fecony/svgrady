@@ -1,4 +1,11 @@
-import { toDegrees, convertAngleToPoint } from './utils'
+import {
+  convertAngleToPoint,
+  getCenter,
+  isFullCircle,
+  calculateAngleBetweenTwoPoints,
+  polarToCartesian,
+  getDOMElements
+} from './utils'
 import { Point, Linecap } from './types'
 
 export interface SVGRadyInterface {
@@ -34,8 +41,7 @@ export default class SVGRady {
   linecap: Linecap
   className: string
 
-  constructor(options: SVGRadyInterface = {}) {
-    console.log(options)
+  constructor(options: SVGRadyInterface) {
     this.selector = options.selector ?? 'svgrady'
     this.width = options.width ?? 150
     this.height = options.height ?? 150
@@ -50,22 +56,12 @@ export default class SVGRady {
     this.linecap = options.linecap ?? 'round'
     this.className = options.className ?? ''
 
-    this.center = this.getCenter()
-    this.elements = this.getElements(this.selector)
+    this.center = getCenter(this.width, this.height)
+    this.elements = getDOMElements(this.selector)
 
     if (this.elements.length) {
       this.elements.forEach(el => this.drawSVG(el))
     }
-  }
-
-  /**
-   * Search for elements with provided selector as data attribute
-   *
-   * @param {string} selector
-   * @returns {NodeListOf<HTMLElement>} Array of Node HTMLElements
-   */
-  private getElements(selector: string): NodeListOf<HTMLElement> {
-    return document.querySelectorAll(`[data-${selector}]`)
   }
 
   /**
@@ -78,32 +74,6 @@ export default class SVGRady {
     let svgNS: string = 'http://www.w3.org/2000/svg'
 
     return elements.map(el => document.createElementNS(svgNS, el))
-  }
-
-  /**
-   * Get center point from width and height
-   *
-   * @returns {Point}
-   */
-  private getCenter(): Point {
-    let x = this.width / 2
-    let y = this.height / 2
-
-    return { x, y }
-  }
-
-  /**
-   * Check if provided angles are full circle
-   *
-   * @param {start} Start Angle
-   * @param {end} End Angle
-   * @returns {boolean}
-   */
-  private isFullCircle(start: number, end: number): boolean {
-    if (start - end === 0 || end - start === 360 || start - end === -360) {
-      return true
-    }
-    return false
   }
 
   /**
@@ -144,13 +114,13 @@ export default class SVGRady {
     g.setAttribute('fill', 'transparent')
     g.setAttribute('stroke-linecap', linecap)
 
-    if (this.isFullCircle(start, end)) {
+    if (isFullCircle(start, end)) {
       end = end - spacing
     }
 
     let point1: Point = convertAngleToPoint(this.radius, start)
     let point2: Point = convertAngleToPoint(this.radius, end)
-    let length: number = this.calculateAngleBetweenTwoPoints(point1, point2)
+    let length: number = calculateAngleBetweenTwoPoints(point1, point2)
 
     let spacesBetween: number = max - 1
     let lengthWithoutSpaces: number = length - spacing * spacesBetween + strokeWidth
@@ -184,47 +154,6 @@ export default class SVGRady {
   }
 
   /**
-   * Calculate Angle between given points.
-   *
-   * @param {Point} point1 First Point on circle
-   * @param {Point} point2 Second Point on circle
-   * @returns {number}
-   */
-  private calculateAngleBetweenTwoPoints(point1: Point, point2: Point): number {
-    let angle1: number = toDegrees(Math.atan2(point1.y, point1.x))
-    let angle2: number = toDegrees(Math.atan2(point2.y, point2.x))
-    let angle: number = Math.round(angle1 - angle2)
-
-    let result: number = angle < 0.0 ? angle + 360 : angle
-
-    return result
-  }
-
-  /**
-   * Will Convert given polar coordinates to Cartesian
-   * - Convert Angle with radius to x,y
-   *
-   * @param {number} centerX
-   * @param {number} centerY
-   * @param {number} radius
-   * @param {number} angleInDegrees
-   * @returns {Point}
-   */
-  private polarToCartesian(
-    centerX: number,
-    centerY: number,
-    radius: number,
-    angleInDegrees: number
-  ): Point {
-    let angleInRadians: number = ((angleInDegrees - 90) * Math.PI) / 180.0
-
-    return {
-      x: centerX + radius * Math.cos(angleInRadians),
-      y: centerY + radius * Math.sin(angleInRadians)
-    }
-  }
-
-  /**
    * Draw arc on current path element
    *
    * @param {Point} x, y
@@ -233,9 +162,9 @@ export default class SVGRady {
    * @param {number} end
    * @returns {string} Returns svg arc string
    */
-  private drawArc({ x, y }: Point, radius: number, start: number, end: number): string {
-    let startPoint: Point = this.polarToCartesian(x, y, radius, end)
-    let endPoint: Point = this.polarToCartesian(x, y, radius, start)
+  private drawArc(center: Point, radius: number, start: number, end: number): string {
+    let startPoint: Point = polarToCartesian(center, radius, end)
+    let endPoint: Point = polarToCartesian(center, radius, start)
     let angle = end - start
 
     angle = angle <= 0 ? (angle += 360) : angle

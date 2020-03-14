@@ -1,3 +1,8 @@
 export { default as toRadians } from './toRadians'
 export { default as toDegrees } from './toDegrees'
 export { default as convertAngleToPoint } from './convertAngleToPoint'
+export { default as getCenter } from './getCenter'
+export { default as isFullCircle } from './isFullCircle'
+export { default as calculateAngleBetweenTwoPoints } from './calculateAngleBetween'
+export { default as polarToCartesian } from './polarToCartesian'
+export { default as getDOMElements } from './getDOMElements'
