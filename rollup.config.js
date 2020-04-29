@@ -12,7 +12,7 @@ const output = production
   ? [
       {
         name: pkg.name,
-        exports: 'named',
+        exports: 'default',
         file: `dist/${pkg.name}.min.js`,
         format: 'umd',
         sourcemap: true
@@ -62,7 +62,9 @@ const watch = {
 }
 
 const plugins = [
-  resolve(),
+  resolve({
+    browser: true
+  }),
   typescript({
     useTsconfigDeclarationDir: true,
     typescript: require('typescript')

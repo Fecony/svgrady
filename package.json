@@ -1,6 +1,6 @@
 {
   "name": "svgrady",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Javascript Separated Radial SVG generator",
   "main": "dist/svgrady.cjs.min.js",
   "module": "dist/svgrady.esm.js",

@@ -48,7 +48,7 @@ Customize options and initialize SVGRady
 ```js
 let options = {}
 
-new SVGRady(options)
+new svgrady(options)
 ```
 
 ## Configuration
