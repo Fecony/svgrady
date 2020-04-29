@@ -35,7 +35,6 @@ export default class SVGRady {
   className: string
 
   constructor(options: SVGRadyInterface = {}) {
-    console.log(options)
     this.selector = options.selector ?? 'svgrady'
     this.width = options.width ?? 150
     this.height = options.height ?? 150

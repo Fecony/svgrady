@@ -76,6 +76,7 @@ Things that can be implemented.
 - Animations
 - Tooltips (show info about step)
 - Flex grow on elements?
+- Pass multiple options?
 - ...
 
 ## Contributing
