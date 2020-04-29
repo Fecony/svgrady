@@ -19,7 +19,7 @@ npm install svgrady
 Or link directly to the CDN:
 
 ```html
-<script src="https://unpkg.com/svgrady@latest/dist/svgrady.umd.js"></script>
+<script src="https://unpkg.com/svgrady@latest/dist/svgrady.min.js"></script>
 ```
 
 ## Usage
